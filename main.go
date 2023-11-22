@@ -7,22 +7,21 @@ import (
 )
 
 func main() {
+	contaIgor := contas.ContaPoupança{}
+	contaIgor.Depositar(100)
+	PagarBoleto(&contaIgor, 60)
+	fmt.Println(contaIgor.Obtersaldo())
 
-	contaJuan := contas.ContaCorrente{
-		Titular:       "Juan",
-		NumeroAgencia: 222,
-		NumeroConta:   111223,
-		Saldo:         120.50,
-	}
+	contaEster := contas.ContaCorrente{}
+	contaEster.Depositar(100)
+	PagarBoleto(&contaEster, 50)
+	fmt.Println(contaEster.Obtersaldo())
+}
 
-	contaRebecca := contas.ContaCorrente{
-		Titular:       "Rebecca",
-		NumeroAgencia: 222,
-		NumeroConta:   111222,
-		Saldo:         120.5,
-	}
+func PagarBoleto(conta verificarConta, ValorDoBoleto float64) {
+	conta.Sacar(ValorDoBoleto)
+}
 
-	fmt.Println(contaJuan, contaRebecca)
-	contaJuan.Transferir(100.0, &contaRebecca)
-	fmt.Println(contaJuan, contaRebecca)
+type verificarConta interface {
+	Sacar(valor float64) string
 }
